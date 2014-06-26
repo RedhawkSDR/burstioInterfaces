@@ -1,0 +1,64 @@
+#
+# Runs relative to burstio project
+#
+
+burstio_top=../../../
+burstio_libsrc_top=$burstio_top/libsrc
+export LD_LIBRARY_PATH=$burstio_libsrc_top/.libs:$burstio_top/.libs:${LD_LIBRARY_PATH}
+export PYTHONPATH=$burstio_libsrc_top/build/lib:${PYTHONPATH}
+
+#
+#  Run Python based testing..
+#   test_xxx_vector.py -- uses sandbox to load components and test data flow
+#   test_python_helpers.py -- test sri and time helpers
+#
+
+# RESOLVE
+# make sure there is link to burstioInterfaces in the build/burstio/ directory
+#
+#if [ ! -h $burstio_libsrc_top/build/lib/burstio/burstioInterfaces ];
+#then
+#	cd $burstio_libsrc_top/build/lib/burstio
+#	ln -s ../../../../build/lib/burstio/burstioInterfaces
+#	cd -
+#fi
+
+## RESOLVE
+#if [ $# -gt 0 ]
+#then
+    # run an associated test script
+#    python  $*
+#else
+#    for pt in test_*.py ; do
+#       python $pt
+#    done
+#fi
+
+
+#rm $burstio_libsrc_top/build/lib/burstio/burstioInterfaces
+
+#
+#  Run Java based testing
+#   InVector_Port - test vector based burstio ports
+#   InString_Port - test string based burstio ports
+#   InSDDS_Port - test SDDS based burstio ports
+#   OutVector_Port - test vector based burstio ports
+#   OutString_Port - test string based burstio ports
+#   OutSDDS_Port - test SDDS based burstio ports
+#   
+#
+#TBD make -C java
+
+
+#
+#  Run C++ based testing
+#   Burstio_InPort_Fixture - test vector based burstio ports
+#   Burstio_OutPort_Fixture - test vector based burstio ports
+#   Burstio_Helper_Fixture - test burstio helper api
+#   
+#
+pushd cpp
+./runtests
+popd 
+
+

@@ -1,0 +1,4 @@
+#!/bin/sh
+test -d m4 || mkdir m4
+test -d acinclude || mkdir acinclude
+autoreconf -i
