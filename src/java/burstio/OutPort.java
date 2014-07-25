@@ -1,3 +1,22 @@
+/*
+ * This file is protected by Copyright. Please refer to the COPYRIGHT file
+ * distributed with this source distribution.
+ *
+ * This file is part of REDHAWK burstioInterfaces.
+ *
+ * REDHAWK burstioInterfaces is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or (at your
+ * option) any later version.
+ *
+ * REDHAWK burstioInterfaces is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see http://www.gnu.org/licenses/.
+ */
 package burstio;
 
 import java.util.ArrayList;
@@ -311,20 +330,21 @@ abstract class OutPort<E,B,A> extends BULKIO.UsesPortStatisticsProviderPOA {
 
     public void addConnectionFilter(final String streamID, final String connectionID)
     {
+
         synchronized (this.connections_) {
-            if (this.routes_.containsKey(streamID)) {
-                this.routes_.get(streamID).remove(connectionID);
+            if (!this.routes_.containsKey(streamID)) {
+                this.routes_.put(streamID, new HashSet<String>());
             }
+            this.routes_.get(streamID).add(connectionID);
         }
     }
 
     public void removeConnectionFilter(final String streamID, final String connectionID)
     {
         synchronized (this.connections_) {
-            if (!this.routes_.containsKey(streamID)) {
-                this.routes_.put(streamID, new HashSet<String>());
+            if (this.routes_.containsKey(streamID)) {
+                this.routes_.get(streamID).remove(connectionID);
             }
-            this.routes_.get(streamID).add(connectionID);
         }
     }
 
@@ -350,6 +370,10 @@ abstract class OutPort<E,B,A> extends BULKIO.UsesPortStatisticsProviderPOA {
             }
             return results.toArray(new BULKIO.UsesPortStatistics[results.size()]);
         }
+    }
+
+    public String getName () {
+        return this.name_;
     }
 
     public int getMaxBursts ()

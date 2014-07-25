@@ -1,6 +1,26 @@
+#
+# This file is protected by Copyright. Please refer to the COPYRIGHT file
+# distributed with this source distribution.
+#
+# This file is part of REDHAWK burstioInterfaces.
+#
+# REDHAWK burstioInterfaces is free software: you can redistribute it and/or modify it under
+# the terms of the GNU Lesser General Public License as published by the Free
+# Software Foundation, either version 3 of the License, or (at your option) any
+# later version.
+#
+# REDHAWK burstioInterfaces is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
+# details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program.  If not, see http://www.gnu.org/licenses/.
+#
 import math
 import time
-
+from omniORB import any
+from ossie.cf import CF
 from bulkio.bulkioInterfaces import BULKIO
 from redhawk.burstioInterfaces import BURSTIO
 
@@ -28,3 +48,9 @@ def usec_to_sec(usec):
 
 def sec_to_usec(sec):
     return sec * 1e6
+
+def elapsed( begin, end ):
+    return (end.twsec-begin.twsec) + ( end.tfsec-begin.tfsec)
+
+def addKeyword( kwds, key, value ):
+    kwds.append( CF.DataType( key, any.to_any(value) ) )

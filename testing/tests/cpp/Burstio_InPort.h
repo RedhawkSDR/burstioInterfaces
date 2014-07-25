@@ -1,8 +1,28 @@
+/*
+ * This file is protected by Copyright. Please refer to the COPYRIGHT file
+ * distributed with this source distribution.
+ *
+ * This file is part of REDHAWK burstioInterfaces.
+ *
+ * REDHAWK burstioInterfaces is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or (at your
+ * option) any later version.
+ *
+ * REDHAWK burstioInterfaces is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see http://www.gnu.org/licenses/.
+ */
 #ifndef BURSTIO_INPORT_FIXTURE_H
 #define BURSTIO_INPORT_FIXTURE_H
 
 #include <cppunit/extensions/HelperMacros.h>
 #include "ossie/debug.h"
+#include "burstio.h"
 
 class Burstio_InPort : public CppUnit::TestFixture
 {
@@ -58,6 +78,10 @@ public:
 
   template < typename T > void test_port_api( T *port );
   template < typename T > void test_push_flush_sequence( T *port );
+  
+  BURSTIO::BurstSRI make_sri_test(const  std::string &sid, const std::string &id );
+  BURSTIO::BurstSRI make_sri_pkt1();
+  BURSTIO::BurstSRI make_sri_pkt2();
 
   rh_logger::LoggerPtr logger;
 };

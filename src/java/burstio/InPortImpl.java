@@ -1,3 +1,22 @@
+/*
+ * This file is protected by Copyright. Please refer to the COPYRIGHT file
+ * distributed with this source distribution.
+ *
+ * This file is part of REDHAWK burstioInterfaces.
+ *
+ * REDHAWK burstioInterfaces is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or (at your
+ * option) any later version.
+ *
+ * REDHAWK burstioInterfaces is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see http://www.gnu.org/licenses/.
+ */
 package burstio;
 
 import java.util.Arrays;
@@ -31,6 +50,12 @@ public class InPortImpl<E> implements InPort<E>
         this.traits_ = traits;
         this.statistics_ = new ReceiverStatistics(this.name_, this.traits_.byteSize() * 8);
     }
+
+    public String getName ()
+    {
+        return this.name_;
+    }
+
 
     public void start ()
     {
@@ -184,11 +209,7 @@ public class InPortImpl<E> implements InPort<E>
     public E[] getBursts (float timeout)
     {
         synchronized (this.queue_) {
-            if (!this.waitBurst(timeout)) {
-                // TODO: 0-length array instead?
-                return null;
-            }
-
+            this.waitBurst(timeout);
             E[] bursts = this.traits_.toArray(this.queue_);
             queue_.clear();
             queue_.notifyAll();
@@ -198,9 +219,10 @@ public class InPortImpl<E> implements InPort<E>
 
     protected boolean waitBurst (float timeout)
     {
-        while (started_ && queue_.isEmpty()) {
+        if (started_ && queue_.isEmpty() && timeout != 0.0 ) {
             try {
-                queue_.wait();
+                if ( timeout < 0.0 ) timeout = 0.0f;
+                queue_.wait(Math.round(timeout));
             } catch (final InterruptedException ex) {
                 return false;
             }

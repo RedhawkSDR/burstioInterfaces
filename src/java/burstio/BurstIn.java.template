@@ -16,6 +16,11 @@ public class Burst@name@In extends BURSTIO.jni.burst@name@POA implements InPort<
         this.impl_ = new InPortImpl<BURSTIO.@name@Burst>(name, new @name@Traits());
     }
 
+    public String getName ()
+    {
+        return this.impl_.getName();
+    }
+
     public void start ()
     {
         this.impl_.start();

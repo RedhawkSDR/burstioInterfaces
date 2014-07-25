@@ -1,3 +1,22 @@
+/*
+ * This file is protected by Copyright. Please refer to the COPYRIGHT file
+ * distributed with this source distribution.
+ *
+ * This file is part of REDHAWK burstioInterfaces.
+ *
+ * REDHAWK burstioInterfaces is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or (at your
+ * option) any later version.
+ *
+ * REDHAWK burstioInterfaces is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see http://www.gnu.org/licenses/.
+ */
 #ifndef BURSTIO_PUSHTEST_FIXTURE_H
 #define BURSTIO_PUSHTEST_FIXTURE_H
 
@@ -13,6 +32,8 @@ class Burstio_PushBursts: public CppUnit::TestFixture
   CPPUNIT_TEST( test_push_simple );
   CPPUNIT_TEST( test_fan_out );
   CPPUNIT_TEST( test_fan_in );
+  CPPUNIT_TEST( test_multiout_push );
+  CPPUNIT_TEST( test_multiout_push2 );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -20,9 +41,20 @@ public:
   void tearDown();
 
   virtual void test_push_simple();
-  virtual void test_push_sequence();
+  virtual void test_push_bursts_sequence();
+  virtual void test_push_burst_sequence();
   virtual void test_fan_out();
   virtual void test_fan_in();
+  virtual void test_multiout_push();
+  virtual void test_multiout_push2();
+
+  virtual int  test_fan_in_push( OUT_PORT *op, int oid, int nbursts ) ;
+  virtual int  test_fan_in_push_results( IN_PORT *ip, int oid, int nbursts ) ;
+
+
+  virtual int  multiout_push( OUT_PORT *op, std::string &sid, int oid, int nbursts ) ;
+  virtual int  multiout_push2( OUT_PORT *op, std::string &sid, int oid, int nbursts ) ;
+  virtual int  multiout_results( IN_PORT *ip, std::string &sid, int oid, int nbursts ) ;
 
   template < typename T > void test_port_api( T *port );
 
@@ -51,7 +83,7 @@ public:
   PortableServer::ObjectId_var op4_oid;
 
   std::vector< bulkio::connection_descriptor_struct >  desc_list;
-
+  BURSTIO::BurstSRI make_sri_test(const  std::string &sid, const std::string &id );
 
 };
 
@@ -70,7 +102,8 @@ typedef Burstio_PushBursts< burstio::BurstFloatOut, burstio::BurstFloatIn >   Pu
 { \
   CPPUNIT_TEST_SUITE( PushBursts##TNAME##_Fixture ); \
   CPPUNIT_TEST( test_push_simple ); \
-  CPPUNIT_TEST( test_push_sequence ); \
+  CPPUNIT_TEST( test_push_bursts_sequence ); \
+  CPPUNIT_TEST( test_push_burst_sequence ); \
   CPPUNIT_TEST( test_fan_in ); \
   CPPUNIT_TEST( test_fan_out ); \
   CPPUNIT_TEST_SUITE_END(); \
