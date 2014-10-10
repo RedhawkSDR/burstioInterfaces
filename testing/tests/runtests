@@ -29,14 +29,18 @@ fi
 #
 #  Run Java based testing
 #
-make -C java check
-
+if command -v ant 2>/dev/null
+then
+    ant -f java/build.xml test
+else
+    make -C java check
+fi
 
 #
 #  Run C++ based testing
 #
 pushd cpp
 ./runtests
-popd 
+popd
 
 

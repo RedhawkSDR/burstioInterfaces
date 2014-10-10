@@ -7,7 +7,7 @@ burstio_libsrc_top=$burstio_top/libsrc
 export LD_LIBRARY_PATH=$burstio_libsrc_top/.libs:$burstio_top/.libs:${LD_LIBRARY_PATH}
 export PYTHONPATH=$burstio_libsrc_top/build/lib:${PYTHONPATH}
 
-pushd cpp 
+pushd cpp
 ./reconf; ./configure; make
 popd
 
@@ -27,5 +27,9 @@ for bt in Byte  Double Float LongLong Long Short  Ubyte  UlongLong  Ulong  Ushor
 done
 sed -f $sedir/$bt.sed ./templates/Burstio_Utils_Test.template > Burstio_Utils_Test.java
 
-
-make build-all
+if command -v ant 2>/dev/null
+then
+    ant compile
+else
+    make build-all
+fi

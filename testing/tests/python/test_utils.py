@@ -96,7 +96,7 @@ class BurstioUtils_Tests(unittest.TestCase):
     def test_time_elapsed(self):
         b = utils.now();
         e = b
-        
+
         elapsed = utils.elapsed( b, e )
         self.assertEqual( elapsed, 0.00, "Elapse same begin/end mismatch." )
 
@@ -121,5 +121,10 @@ if __name__ == '__main__':
     if len(sys.argv) < 2 :
         unittest.main()
     else:
-        suite = unittest.TestLoader().loadTestsFromTestCase(globals()[sys.argv[1]] ) 
-        unittest.TextTestRunner(verbosity=2).run(suite)
+        suite = unittest.TestLoader().loadTestsFromTestCase(globals()[sys.argv[1]] )
+        try:
+            import xmlrunner
+            runner = xmlrunner.XMLTestRunner(verbosity=2)
+        except ImportError:
+            runner = unittest.TextTestRunner(verbosity=2)
+        runner.run(suite)

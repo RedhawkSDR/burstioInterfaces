@@ -162,7 +162,7 @@ class BaseVectorPort(unittest.TestCase):
         sri.modulation = "mod"
         sri.baudrate = 56000.0
         sri.fec = "vit"
-        sri.fecrate = "7/8" 
+        sri.fecrate = "7/8"
         sri.randomizer="R20"
         sri.overhead="unknown"
         sri.expectedStartOfBurstTime=utils.now()
@@ -197,7 +197,7 @@ class BaseVectorPort(unittest.TestCase):
     def disconnect_cb( self, conn_id ):
         self.disconn_cnt+=1
 
-    
+
     def test_inport_python_api(self):
         ##
         ## test bulkio base class standalone
@@ -224,17 +224,17 @@ class BaseVectorPort(unittest.TestCase):
         bio.start()
 
         pkt = bio.getBurst( self.NON_BLOCKING )
-        self.assertEqual(pkt,None,"getBurst Failed - should be empty")        
+        self.assertEqual(pkt,None,"getBurst Failed - should be empty")
 
         bursts = bio.getBursts(  self.NON_BLOCKING )
-        self.assertEqual(bursts,[],"getBursts Failed - should be empty list")        
+        self.assertEqual(bursts,[],"getBursts Failed - should be empty list")
 
         sid = "test_port_api"
         oid = "id-1"
-        ts = utils.now() 
+        ts = utils.now()
         sri = self.make_sri_test( sid, oid )
         burst = self.burst_type( sri, self.seq, ts, False )
-        
+
         # push burst to port
         bio.pushBursts( [ burst ] )
 
@@ -289,7 +289,7 @@ class BaseVectorPort(unittest.TestCase):
 
 
             bio.pushBursts( bursts )
-            i +=1 
+            i +=1
 
         qed = bio.getQueueDepth()
         self.assertEqual(qed,totalBursts,"BURSTIO Push/Flush getQueueDepth totalBursts mismatch")
@@ -301,40 +301,40 @@ class BaseVectorPort(unittest.TestCase):
         pkt = bio.getBurst( self.NON_BLOCKING )
         self.assertNotEqual(pkt,None,"BURSTIO Push/Flush Pkt != None")
         self.check_pkt( pkt, sri2.streamID, sri2.id  )
-        
+
         bio.flush()
 
         qed = bio.getQueueDepth()
         self.assertEqual(qed,0,"Get Stream Depth Failed,should be 0")
 
         pkt = bio.getBurst(  self.NON_BLOCKING )
-        self.assertEqual(pkt, None,"getBurst Failed - should be empty")        
+        self.assertEqual(pkt, None,"getBurst Failed - should be empty")
 
         bursts = bio.getBursts(  self.NON_BLOCKING )
-        self.assertEqual(bursts, [],"getBursts Failed - should be empty list")        
+        self.assertEqual(bursts, [],"getBursts Failed - should be empty list")
 
 
     def test_outport_api(self):
 
         bio = self.bio_out_module("xxx")
-        
+
         # try and assign logger to port
         ##bio.setLogger(self.logger);
 
         stats = bio._get_statistics();
-        self.assertEqual(stats, [],"Set/Get API, Statistics should be empty")        
+        self.assertEqual(stats, [],"Set/Get API, Statistics should be empty")
 
         state = bio.state();
-        self.assertEqual(state, BULKIO.IDLE,"Set/Get API, State mismatch")        
+        self.assertEqual(state, BULKIO.IDLE,"Set/Get API, State mismatch")
 
         clist = bio._get_connections();
-        self.assertNotEqual(clist,None,"Set/Get API, Cannot get connections list")        
+        self.assertNotEqual(clist,None,"Set/Get API, Cannot get connections list")
 
         ip1 = self.bio_in_module("sink_1")
         ip1_oid = self.rootPOA.activate_object(ip1);
-        connectionName="testing-connection-list" 
+        connectionName="testing-connection-list"
         bio.connectPort(ip1._this(), connectionName )
-        
+
         cl = bio._get_connections()
         self.assertNotEqual(cl,None,"Cannot get Connections List")
         self.assertEqual(len(cl),1,"Incorrect Connections List Length")
@@ -373,7 +373,7 @@ class BaseVectorPort(unittest.TestCase):
         bio.setMaxBursts(tmp)
         tmp = bio.getMaxBursts()
         self.assertEqual(tmp,22, "BURSTIO_OUT_PORT_TEST Get Max Bursts Failed" )
-                           
+
         tmp=0xbeef
         bio.setByteThreshold(tmp)
         tmp = bio.getByteThreshold()
@@ -385,7 +385,7 @@ class BaseVectorPort(unittest.TestCase):
         self.assertEqual(tmp, 123456789, "BURSTIO_OUT_PORT_TEST Set/Get Byte latency Threshold Failed")
 
         bio.connectPort( ip1._this(), "connection_1" )
-                           
+
         ts = utils.now()
         sid = "test_port_api"
         id = "id-1"
@@ -398,7 +398,7 @@ class BaseVectorPort(unittest.TestCase):
         bio.pushBursts( bursts )
 
         bio.pushBurst( self.seq, sri )
- 
+
         bio.start()
         bio.stop()
 
@@ -443,66 +443,66 @@ class BaseVectorPort(unittest.TestCase):
 
 class Test_Burstio_Int8(BaseVectorPort):
     def __init__(self, methodName='runTest', cname='Python_Ports' ):
-        BaseVectorPort.__init__(self, 
-                                methodName, 
-                                ptype = 'Int8', 
-                                cname=cname, 
-                                bio_in_module=redhawk.burstio.BurstByteIn, 
+        BaseVectorPort.__init__(self,
+                                methodName,
+                                ptype = 'Int8',
+                                cname=cname,
+                                bio_in_module=redhawk.burstio.BurstByteIn,
                                 bio_out_module=redhawk.burstio.BurstByteOut,
                                 bio_burst = ByteBurst )
         pass
 
 class Test_Burstio_Int16(BaseVectorPort):
     def __init__(self, methodName='runTest', cname='Python_Ports' ):
-        BaseVectorPort.__init__(self, 
-                                methodName, 
-                                ptype='Int16', 
-                                cname=cname, 
-                                bio_in_module=redhawk.burstio.BurstShortIn, 
+        BaseVectorPort.__init__(self,
+                                methodName,
+                                ptype='Int16',
+                                cname=cname,
+                                bio_in_module=redhawk.burstio.BurstShortIn,
                                 bio_out_module=redhawk.burstio.BurstShortOut,
                                 bio_burst = ShortBurst )
         pass
 
 class Test_Burstio_Int32(BaseVectorPort):
     def __init__(self, methodName='runTest', cname='Python_Ports' ):
-        BaseVectorPort.__init__(self, 
-                                methodName, 
-                                ptype='Int32', 
-                                cname=cname, 
-                                bio_in_module=redhawk.burstio.BurstLongIn, 
+        BaseVectorPort.__init__(self,
+                                methodName,
+                                ptype='Int32',
+                                cname=cname,
+                                bio_in_module=redhawk.burstio.BurstLongIn,
                                 bio_out_module=redhawk.burstio.BurstLongOut,
                                 bio_burst = LongBurst )
         pass
 
 class Test_Burstio_Int64(BaseVectorPort):
     def __init__(self, methodName='runTest', cname='Python_Ports' ):
-        BaseVectorPort.__init__(self, 
-                                methodName, 
-                                ptype='Int64', 
-                                cname=cname, 
-                                bio_in_module=redhawk.burstio.BurstLongLongIn, 
+        BaseVectorPort.__init__(self,
+                                methodName,
+                                ptype='Int64',
+                                cname=cname,
+                                bio_in_module=redhawk.burstio.BurstLongLongIn,
                                 bio_out_module=redhawk.burstio.BurstLongLongOut,
                                 bio_burst = LongLongBurst )
         pass
 
 class Test_Burstio_Double(BaseVectorPort):
     def __init__(self, methodName='runTest', cname='Python_Ports' ):
-        BaseVectorPort.__init__(self, 
-                                methodName, 
-                                ptype='Double', 
-                                cname=cname, 
-                                bio_in_module=redhawk.burstio.BurstDoubleIn, 
+        BaseVectorPort.__init__(self,
+                                methodName,
+                                ptype='Double',
+                                cname=cname,
+                                bio_in_module=redhawk.burstio.BurstDoubleIn,
                                 bio_out_module=redhawk.burstio.BurstDoubleOut,
                                 bio_burst = DoubleBurst )
         pass
 
 class Test_Burstio_Float(BaseVectorPort):
     def __init__(self, methodName='runTest', cname='Python_Ports' ):
-        BaseVectorPort.__init__(self, 
-                                methodName, 
-                                ptype='Float', 
-                                cname=cname, 
-                                bio_in_module=redhawk.burstio.BurstFloatIn, 
+        BaseVectorPort.__init__(self,
+                                methodName,
+                                ptype='Float',
+                                cname=cname,
+                                bio_in_module=redhawk.burstio.BurstFloatIn,
                                 bio_out_module=redhawk.burstio.BurstFloatOut,
                                 bio_burst = FloatBurst )
         pass
@@ -513,5 +513,10 @@ if __name__ == '__main__':
     for x in [ Test_Burstio_Int8, Test_Burstio_Int16,  Test_Burstio_Int32, Test_Burstio_Int64, Test_Burstio_Float, Test_Burstio_Double ]:
         tests = unittest.TestLoader().loadTestsFromTestCase(x)
         suite.addTests(tests)
-    unittest.TextTestRunner(verbosity=2).run(suite)
+    try:
+        import xmlrunner
+        runner = xmlrunner.XMLTestRunner(verbosity=2)
+    except ImportError:
+        runner = unittest.TextTestRunner(verbosity=2)
+    runner.run(suite)
 

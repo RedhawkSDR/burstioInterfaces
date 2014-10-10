@@ -206,7 +206,7 @@ class BaseMultiOut(unittest.TestCase):
         sri.modulation = "mod"
         sri.baudrate = 56000.0
         sri.fec = "vit"
-        sri.fecrate = "7/8" 
+        sri.fecrate = "7/8"
         sri.randomizer="R20"
         sri.overhead="unknown"
         sri.expectedStartOfBurstTime=utils.now()
@@ -222,7 +222,7 @@ class BaseMultiOut(unittest.TestCase):
         sri.expectedStartOfBurstTime=utils.now()
 
     def check_pkt(self, ip, sid,  oid, npkts):
-        
+
         cnt=0
         for i in range(npkts):
             pkt = ip.getBurst( self.NON_BLOCKING )
@@ -264,7 +264,7 @@ class BaseMultiOut(unittest.TestCase):
         while  totalBursts < nbursts :
             data=self.getData()
             totalBursts +=1
-            
+
             bio.pushBurst( data, sri, utils.now() )
 
         bio.flush()
@@ -299,13 +299,13 @@ class BaseMultiOut(unittest.TestCase):
         self.ip3.start()
         self.ip4.start()
         self.port.start()
-        
+
         ##
         ## Push Burst stream to IP1
         ##
-        filter_stream_id="stream-1-1" 
+        filter_stream_id="stream-1-1"
         sri = self.send_bursts2( self.port, filter_stream_id, "id-1", maxTotalBursts )
-        
+
         self.logger.debug( "Multiout DATA Filter - sid:" + filter_stream_id )
 
         n=self.check_pkt( self.ip1, sri.streamID, sri.id, maxTotalBursts  )
@@ -323,9 +323,9 @@ class BaseMultiOut(unittest.TestCase):
         ##
         ## Push Burst stream to SELF.IP2
         ##
-        filter_stream_id="stream-2-1" 
+        filter_stream_id="stream-2-1"
         sri = self.send_bursts2( self.port, filter_stream_id, "id-2", maxTotalBursts )
-        
+
         self.logger.debug( "Multiout DATA Filter - sid:" + filter_stream_id )
 
         n=self.check_pkt( self.ip2, sri.streamID, sri.id, maxTotalBursts  )
@@ -344,9 +344,9 @@ class BaseMultiOut(unittest.TestCase):
         ##
         ## Push Burst stream to IP3
         ##
-        filter_stream_id="stream-3-1" 
+        filter_stream_id="stream-3-1"
         sri = self.send_bursts2( self.port, filter_stream_id, "id-3", maxTotalBursts )
-        
+
         self.logger.debug( "Multiout DATA Filter - sid:" + filter_stream_id )
 
         n=self.check_pkt( self.ip3, sri.streamID, sri.id, maxTotalBursts  )
@@ -365,9 +365,9 @@ class BaseMultiOut(unittest.TestCase):
         ##
         ## Push Burst stream to IP4
         ##
-        filter_stream_id="stream-4-1" 
+        filter_stream_id="stream-4-1"
         sri = self.send_bursts2( self.port, filter_stream_id, "id-4", maxTotalBursts )
-        
+
         self.logger.debug( "Multiout DATA Filter - sid:" + filter_stream_id )
 
         n=self.check_pkt( self.ip4, sri.streamID, sri.id, maxTotalBursts  )
@@ -385,66 +385,66 @@ class BaseMultiOut(unittest.TestCase):
 
 class Test_Burstio_Int8(BaseMultiOut):
     def __init__(self, methodName='runTest', cname='Python_Ports' ):
-        BaseMultiOut.__init__(self, 
-                                methodName, 
-                                ptype = 'Int8', 
-                                cname=cname, 
-                                bio_in_module=redhawk.burstio.BurstByteIn, 
+        BaseMultiOut.__init__(self,
+                                methodName,
+                                ptype = 'Int8',
+                                cname=cname,
+                                bio_in_module=redhawk.burstio.BurstByteIn,
                                 bio_out_module=redhawk.burstio.BurstByteOut,
                                 bio_burst = ByteBurst )
         pass
 
 class Test_Burstio_Int16(BaseMultiOut):
     def __init__(self, methodName='runTest', cname='Python_Ports' ):
-        BaseMultiOut.__init__(self, 
-                                methodName, 
-                                ptype='Int16', 
-                                cname=cname, 
-                                bio_in_module=redhawk.burstio.BurstShortIn, 
+        BaseMultiOut.__init__(self,
+                                methodName,
+                                ptype='Int16',
+                                cname=cname,
+                                bio_in_module=redhawk.burstio.BurstShortIn,
                                 bio_out_module=redhawk.burstio.BurstShortOut,
                                 bio_burst = ShortBurst )
         pass
 
 class Test_Burstio_Int32(BaseMultiOut):
     def __init__(self, methodName='runTest', cname='Python_Ports' ):
-        BaseMultiOut.__init__(self, 
-                                methodName, 
-                                ptype='Int32', 
-                                cname=cname, 
-                                bio_in_module=redhawk.burstio.BurstLongIn, 
+        BaseMultiOut.__init__(self,
+                                methodName,
+                                ptype='Int32',
+                                cname=cname,
+                                bio_in_module=redhawk.burstio.BurstLongIn,
                                 bio_out_module=redhawk.burstio.BurstLongOut,
                                 bio_burst = LongBurst )
         pass
 
 class Test_Burstio_Int64(BaseMultiOut):
     def __init__(self, methodName='runTest', cname='Python_Ports' ):
-        BaseMultiOut.__init__(self, 
-                                methodName, 
-                                ptype='Int64', 
-                                cname=cname, 
-                                bio_in_module=redhawk.burstio.BurstLongLongIn, 
+        BaseMultiOut.__init__(self,
+                                methodName,
+                                ptype='Int64',
+                                cname=cname,
+                                bio_in_module=redhawk.burstio.BurstLongLongIn,
                                 bio_out_module=redhawk.burstio.BurstLongLongOut,
                                 bio_burst = LongLongBurst )
         pass
 
 class Test_Burstio_Double(BaseMultiOut):
     def __init__(self, methodName='runTest', cname='Python_Ports' ):
-        BaseMultiOut.__init__(self, 
-                                methodName, 
-                                ptype='Double', 
-                                cname=cname, 
-                                bio_in_module=redhawk.burstio.BurstDoubleIn, 
+        BaseMultiOut.__init__(self,
+                                methodName,
+                                ptype='Double',
+                                cname=cname,
+                                bio_in_module=redhawk.burstio.BurstDoubleIn,
                                 bio_out_module=redhawk.burstio.BurstDoubleOut,
                                 bio_burst = DoubleBurst )
         pass
 
 class Test_Burstio_Float(BaseMultiOut):
     def __init__(self, methodName='runTest', cname='Python_Ports' ):
-        BaseMultiOut.__init__(self, 
-                                methodName, 
-                                ptype='Float', 
-                                cname=cname, 
-                                bio_in_module=redhawk.burstio.BurstFloatIn, 
+        BaseMultiOut.__init__(self,
+                                methodName,
+                                ptype='Float',
+                                cname=cname,
+                                bio_in_module=redhawk.burstio.BurstFloatIn,
                                 bio_out_module=redhawk.burstio.BurstFloatOut,
                                 bio_burst = FloatBurst )
         pass
@@ -455,5 +455,9 @@ if __name__ == '__main__':
     for x in [ Test_Burstio_Int8, Test_Burstio_Int16, Test_Burstio_Int32, Test_Burstio_Int64, Test_Burstio_Float, Test_Burstio_Double ]:
         tests = unittest.TestLoader().loadTestsFromTestCase(x)
         suite.addTests(tests)
-    unittest.TextTestRunner(verbosity=2).run(suite)
-
+    try:
+        import xmlrunner
+        runner = xmlrunner.XMLTestRunner(verbosity=2)
+    except ImportError:
+        runner = unittest.TextTestRunner(verbosity=2)
+    runner.run(suite)
