@@ -68,7 +68,7 @@ $(burstio_builddir):
 	mkdir -p $@
 
 $(burstio_builddir)/%DynSK.cpp $(burstio_builddir)/%SK.cpp $(burstio_builddir)/%.h: $(burstio_idldir)/%.idl | $(burstio_builddir)
-	$(AM_V_GEN)$(IDL) -I $(idl_srcdir) -I $(OSSIE_IDLDIR) -I $(BULKIO_IDLDIR) -C $(burstio_builddir) -bcxx -Wba -Wbd=DynSK.cpp -Wbh=.h -Wbs=SK.cpp -Wbkeep_inc_path $<
+	$(AM_V_GEN)$(IDL) -I $(idl_srcdir) -I $(OSSIE_IDLDIR) -I $(OMNICOS_IDLDIR) -I $(OMNIORB_IDLDIR) -I $(BULKIO_IDLDIR) -C $(burstio_builddir) -bcxx -Wba -Wbd=DynSK.cpp -Wbh=.h -Wbs=SK.cpp -Wbkeep_inc_path $<
 
 
 lib_LTLIBRARIES += libburstio.la

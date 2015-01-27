@@ -226,6 +226,10 @@ class OutPort(UsesPort, BULKIO__POA.UsesPortStatisticsProvider):
 
         self.flush()
     
+    # Provide standard interface for start/stop
+    startPort = start
+    stopPort = stop
+
     def getMaxBursts(self):
         return self.getDefaultPolicy().getMaxBursts()
 

@@ -18,7 +18,7 @@
 # along with this program.  If not, see http://www.gnu.org/licenses/.
 #
 
-AC_INIT(burstio, 1.10.2)
+AC_INIT(burstio, 1.11.0)
 AC_CONFIG_SRCDIR([src/cpp/Makefile.am])
 AC_CONFIG_MACRO_DIR([m4])
 
@@ -41,9 +41,12 @@ if test "$IDL" = no; then
 fi
 AC_LANG_PUSH([C++])
 PKG_CHECK_MODULES([OMNIORB], [omniORB4 >= 4.1.0])
+RH_PKG_IDLDIR([OMNIORB], [omniORB4])
 
 PKG_CHECK_MODULES(OSSIE, ossie >= 1.10.0,,exit)
 RH_PKG_IDLDIR([OSSIE], [ossie])
+PKG_CHECK_MODULES([OMNICOS], [omniCOS4 >= 4.0.0])
+RH_PKG_IDLDIR([OMNICOS], [omniCOS4])
 
 PKG_CHECK_MODULES([BULKIO], [bulkioInterfaces >= 1.10])
 RH_PKG_IDLDIR([BULKIO], [bulkioInterfaces])
