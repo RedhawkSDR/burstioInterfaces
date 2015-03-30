@@ -27,8 +27,8 @@ idl_srcdir = $(top_srcdir)/src/idl
 ###############################################################################
 java_JARFILES = BURSTIOInterfaces.jar
 
-IDLJFLAGS = -i $(idl_srcdir) -i $(OSSIE_IDLDIR) -i $(OMNICOS_IDLDIR) -i $(OMNIORB_IDLDIR) -i $(BULKIO_IDLDIR)
-IDLJNIFLAGS = -I $(idl_srcdir) -I $(OSSIE_IDLDIR) -I $(OMNICOS_IDLDIR) -I $(OMNIORB_IDLDIR) -I $(BULKIO_IDLDIR)
+IDLJFLAGS = -i $(idl_srcdir) -i $(OSSIE_IDLDIR) -i $(BULKIO_IDLDIR)
+IDLJNIFLAGS = -I $(idl_srcdir) -I $(OSSIE_IDLDIR) -I $(BULKIO_IDLDIR)
 
 IDLJ_BUILDDIR = src
 IDLJNI_BUILDDIR = $(IDLJ_BUILDDIR)
@@ -167,7 +167,7 @@ redhawk/BURSTIO:
 	mkdir -p $@
 
 redhawk/BURSTIO/jni_%.cpp redhawk/BURSTIO/jni_%.h: $(idl_srcdir)/redhawk/BURSTIO/%.idl | redhawk/BURSTIO
-	$(AM_V_GEN)$(IDLJNICXX) -I $(idl_srcdir) -I $(OSSIE_IDLDIR) -I $(OMNICOS_IDLDIR) -I $(OMNIORB_IDLDIR) -I $(BULKIO_IDLDIR) -Wbincprefix=redhawk/BURSTIO -C redhawk/BURSTIO $<
+	$(AM_V_GEN)$(IDLJNICXX) -I $(idl_srcdir) -I $(OSSIE_IDLDIR) -I $(BULKIO_IDLDIR) -Wbincprefix=redhawk/BURSTIO -C redhawk/BURSTIO $<
 
 libburstiojni_la_CPPFLAGS = -I $(top_builddir)/src/cpp $(OSSIE_CFLAGS) $(BULKIO_CFLAGS) $(JNI_CPPFLAGS)
 libburstiojni_la_LIBADD = $(top_builddir)/src/cpp/libburstioInterfaces.la $(JNI_LIBS)

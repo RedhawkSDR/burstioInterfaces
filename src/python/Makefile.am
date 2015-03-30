@@ -25,9 +25,9 @@ idl_srcdir = $(top_srcdir)/src/idl
 # Map external IDL modules to Python packages
 CF_MODULES = cf PortTypes QueryablePort LogInterfaces
 BULKIO_MODULES = bulkioDataTypes bio_runtimeStats
-PYTHON_EXTERNS = $(CF_MODULES:%=%:ossie.cf) $(BULKIO_MODULES:%=%:bulkio.bulkioInterfaces) CosNaming:omniORB.COS
+PYTHON_EXTERNS = $(CF_MODULES:%=%:ossie.cf) $(BULKIO_MODULES:%=%:bulkio.bulkioInterfaces)
 
-IDLFLAGS = $(PYTHON_EXTERNS:%=-Wbextern=%) -I $(idl_srcdir) -I $(OSSIE_IDLDIR) -I $(OMNICOS_IDLDIR) -I $(OMNIORB_IDLDIR) -I $(BULKIO_IDLDIR)
+IDLFLAGS = $(PYTHON_EXTERNS:%=-Wbextern=%) -I $(idl_srcdir) -I $(OSSIE_IDLDIR) -I $(BULKIO_IDLDIR)
 
 redhawk/burstioInterfaces/%_idl.py : $(idl_srcdir)/redhawk/BURSTIO/%.idl
 	$(IDL) -bpython -Wbpackage=redhawk.burstioInterfaces $(IDLFLAGS) $<
