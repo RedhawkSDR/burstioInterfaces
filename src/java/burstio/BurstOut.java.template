@@ -28,4 +28,9 @@ public class Burst@name@Out extends OutPort<burst@name@Operations, BURSTIO.@name
     {
         return BURSTIO.burst@name@Helper.id();
     }
+
+	public String getRepid ()
+	{
+		return repoId();
+	}
 }

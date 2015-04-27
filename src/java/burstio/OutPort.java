@@ -37,7 +37,9 @@ import org.ossie.properties.StructDef;
 import burstio.stats.SenderStatistics;
 import burstio.traits.BurstTraits;
 
-abstract class OutPort<E,B,A> extends BULKIO.UsesPortStatisticsProviderPOA {
+import org.ossie.component.PortBase;
+
+abstract class OutPort<E,B,A> extends BULKIO.UsesPortStatisticsProviderPOA implements PortBase {
     public static final int DEFAULT_MAX_BURSTS = 100;
     public static final int DEFAULT_LATENCY_THRESHOLD = 10000; // 10000 us = 10ms
 
@@ -511,6 +513,16 @@ abstract class OutPort<E,B,A> extends BULKIO.UsesPortStatisticsProviderPOA {
     {
         this.pushBursts(this.traits_.toArray(bursts));
     }
+
+	public String getRepid ()
+	{
+		return "IDL:CORBA/Object:1.0";
+	}
+
+	public String getDirection ()
+	{
+		return "Uses";
+	}
 
     protected void sendBursts(B[] bursts, long startTime, float queueDepth, final String streamID)
     {
