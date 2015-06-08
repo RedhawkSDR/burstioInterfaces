@@ -41,7 +41,7 @@ with this program.  If not, see http://www.gnu.org/licenses/.
   </path>
 
   <target name="compile" depends="clean">
-    <javac srcdir="${src.dir}" destdir="${build.dir}">
+    <javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.dir}">
       <classpath refid="junit.class.path" />
     </javac>
   </target>
