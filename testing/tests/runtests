@@ -2,10 +2,10 @@
 # Runs relative to burstio project
 #
 
-burstio_top=../..
+burstio_top=../../..
 burstio_libsrc_top=$burstio_top/src
 export LD_LIBRARY_PATH=$burstio_libsrc_top/cpp/.libs:$burstio_libsrc_top/java/.libs:${LD_LIBRARY_PATH}
-export PYTHONPATH=$burstio_libsrc_top/python/build/lib:${PYTHONPATH}
+export PYTHONPATH=$burstio_libsrc_top/python/redhawk:$burstio_libsrc_top/python:${PYTHONPATH}
 
 #
 #  Run Python based testing..
