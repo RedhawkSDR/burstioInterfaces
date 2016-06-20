@@ -13,15 +13,15 @@ export PYTHONPATH=$burstio_libsrc_top/python/redhawk:$burstio_libsrc_top/python:
 if [ $# -gt 0 ]
 then
     # run an associated test script
-    pushd python
+    cd python
     python  $*
-    popd
+    cd -
 else
-    pushd python
+    cd python
     for pt in test_*.py ; do
        python $pt
     done
-    popd
+    cd -
 fi
 
 
@@ -39,8 +39,8 @@ fi
 #
 #  Run C++ based testing
 #
-pushd cpp
+cd cpp
 ./runtests
-popd
+cd -
 
 

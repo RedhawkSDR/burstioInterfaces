@@ -293,7 +293,12 @@ abstract class OutPort<E,B,A> extends BULKIO.UsesPortStatisticsProviderPOA imple
             int index = 0;
             for (Map.Entry<String,Connection<E>> entry : this.connections_.entrySet()) {
                 Connection<E> connection = entry.getValue();
-                results[index++] = new ExtendedCF.UsesConnection(entry.getKey(), (org.omg.CORBA.Object)connection.port);
+                org.omg.CORBA.Object my_obj = (org.omg.CORBA.Object)connection.port;
+                if (my_obj instanceof omnijni.ObjectImpl) {
+                    String ior = omnijni.ORB.object_to_string(my_obj);
+                    my_obj = this._orb().string_to_object(ior);
+                }
+                results[index++] = new ExtendedCF.UsesConnection(entry.getKey(), my_obj);
             }
             return results;
         }
